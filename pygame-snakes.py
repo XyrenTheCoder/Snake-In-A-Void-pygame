@@ -48,7 +48,7 @@ def show_score(color, font, size):
 
 def game_over():
     f = open("highscore.txt", 'a')
-    f.write(f"\n{score}")
+    f.write(f"{score}\n")
     f.close()
     font = pygame.font.SysFont('courier', 50)
     game_over_surface = font.render(f'Your score is : {str(score)}', True, white)
