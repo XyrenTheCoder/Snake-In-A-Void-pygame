@@ -1,7 +1,7 @@
 # Snakes-pygame
 Snake game made with Pygame
 
-#instructions
+# instructions
 Use your arrow keys to change directions.
 
 *Do not delete `highscore.txt` or you will lose your score records*
