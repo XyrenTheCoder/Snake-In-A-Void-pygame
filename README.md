@@ -4,7 +4,7 @@ Snake game made with Pygame
 # instructions
 Use your arrow keys to change directions.
 
-*Do not delete `highscore.txt` or you will lose your score records*
+*Do not delete the hidden file `.highscore.txt` or you will lose your score records.*
 
 # Guide
 
