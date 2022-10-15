@@ -14,4 +14,4 @@ Use your arrow keys to change directions.
 
 - red - bomb: -20 points
 
-- grey - wall: **die instantly**
+- grey - wall: **die instantly** when touched
