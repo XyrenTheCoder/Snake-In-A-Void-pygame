@@ -4,9 +4,9 @@ Snake game made with Pygame
 
 # Controls
 
-Use your arrow keys to change directions.
+Use your `arrow keys` to change directions.
 
-Press ESCAPE to quit, press R to restart (can be used mid-game)
+Press `ESCAPE` to quit, press `R` to restart (can be used mid-game)
 
 ***Do not delete the hidden file `.highscore.txt` or you will lose your score records.***
 
