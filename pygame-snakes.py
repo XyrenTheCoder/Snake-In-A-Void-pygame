@@ -1,4 +1,4 @@
-import pygame, time, random
+import pygame, time, random, os
 
 snake_speed = 15
 
@@ -47,12 +47,14 @@ def show_score(color, font, size):
     game_window.blit(score_surface, score_rect)
 
 def game_over():
-    f = open("highscore.txt", 'a')
+    f = open(".highscore.txt", 'a')
     f.write(f"{score}\n")
     f.close()
+    if os.name == 'nt': os.system("attrib +h .highscore.txt")
+    else: pass
     font = pygame.font.SysFont('courier', 50)
     game_over_surface = font.render(f'Your score is : {str(score)}', True, white)
-    with open('highscore.txt') as file:
+    with open('.highscore.txt') as file:
         lines = file.readlines()
         scores = [line.rstrip() for line in lines]
     scores.sort()
