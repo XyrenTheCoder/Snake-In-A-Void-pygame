@@ -20,7 +20,7 @@ Use your `arrow keys` to change directions.
 
 # Objects
 
-- blue - you as the snake
+- blue - snake: the player
 
 - cyan - ultimate fruit: +10 points
 
@@ -28,7 +28,7 @@ Use your `arrow keys` to change directions.
 
 - red - bomb: -20 points
 
-- grey (and window borders) - wall: die instantly when touched
+- grey and window borders - wall: die instantly when touched
 
 # Objective
 
