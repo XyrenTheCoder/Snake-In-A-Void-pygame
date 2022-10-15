@@ -8,10 +8,10 @@ Use your arrow keys to change directions.
 
 # Guide
 
-- cyan: +10 points
+- cyan - ultimate fruit: +10 points
 
-- white: +5 points
+- white - fruit: +5 points
 
-- red: -20 points
+- red - bomb: -20 points
 
-- grey: **die instantly**
+- grey - wall: **die instantly**
