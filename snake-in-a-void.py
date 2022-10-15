@@ -1,6 +1,6 @@
 import pygame, random, os, os.path
 
-with open(".highscore.txt", "+r") as file:
+with open(".highscore.txt", "r") as file:
     if os.name == 'nt': os.system("attrib +h .highscore.txt")
     else: pass
     file.close()
