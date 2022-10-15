@@ -14,4 +14,4 @@ Use your arrow keys to change directions.
 
 - red: -20 points
 
-- grey: die instantly
+- grey: **die instantly**
