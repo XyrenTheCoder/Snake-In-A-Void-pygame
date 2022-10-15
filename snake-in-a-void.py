@@ -1,12 +1,13 @@
-import pygame, random, os, os.path
+import pygame, random, os.path, pyautogui
 
+pyautogui.alert("Welcome to Snake In A Void guide!\n\n- CONTROLS -\n\nTo change directions of the snake, use your arrow keys.\nTo sprint, press and hold shift.\nTo unsprint, release shift key.\nTo quit game, press escape.\nTo retry or restart game, press r key.\nTo show this guide, press z key.\n\n- OBJECTS & OBJECTIVES -\n\nYour're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nCyan (ultimate fruit): +10 points\nWhite (fruit): +5 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nNow enjoy the game!")
 with open(".highscore.txt", "r") as file:
     if os.name == 'nt': os.system("attrib +h .highscore.txt")
     else: pass
     file.close()
 
 window_x = 720
-window_y = 480
+window_y = 540
 
 black = pygame.Color(0,0,0)
 white = pygame.Color(255,255,255)
@@ -39,7 +40,6 @@ ult_spawn = True
 bomb_spawn = True
 wall_spawn = True
 
-snake_speed = 15
 direction = 'RIGHT'
 change_to = direction
 score = 0
@@ -63,7 +63,7 @@ def game_over():
     font2 = pygame.font.SysFont('courier', 30)
     game_over_sub = font2.render(f'Highest score record: {str(highscore)}', True, green)
     font3 = pygame.font.SysFont('segoe ui', 20)
-    game_over_restart = font3.render('-Press R to restart, Press ESC to quit game-', True, blue)
+    game_over_restart = font3.render('R: restart | ESC: quit | Z: how to play guide', True, blue)
     game_over_rect = game_over_surface.get_rect()
     game_over_rect2 = game_over_surface.get_rect()
     game_over_rect3 = game_over_surface.get_rect()
@@ -76,26 +76,42 @@ def game_over():
     game_window.blit(game_over_restart, game_over_rect3)
     pygame.display.flip()
 
-    for restart in pygame.event.get():
-        if restart.type == pygame.KEYDOWN:
-            if restart.key == pygame.K_r:
-                pygame.quit()
-                os.system(f"python {os.path.basename(__file__)}")
-            elif restart.key == pygame.K_ESCAPE: raise KeyboardInterrupt
+    while True:
+        for restart in pygame.event.get():
+            if restart.type == pygame.KEYDOWN:
+                if restart.key == pygame.K_r:
+                    pygame.quit()
+                    os.system(f"python {os.path.basename(__file__)}")
+                elif restart.key == pygame.K_z: pyautogui.alert("Welcome to Snake In A Void guide!\n\n- CONTROLS -\n\nTo change directions of the snake, use your arrow keys.\nTo sprint, press and hold shift.\nTo unsprint, release shift key.\nTo quit game, press escape.\nTo retry or restart game, press r key.\nTo show this guide, press z key.\n\n- OBJECTS & OBJECTIVES -\n\nYour're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nCyan (ultimate fruit): +10 points\nWhite (fruit): +5 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nNow enjoy the game!")
+                elif restart.key == pygame.K_ESCAPE: raise KeyboardInterrupt
+                else: pass
             else: pass
-        else: pass
+
+snake_speed = 15
+if score == 40: snake_speed = 17
+elif score == 80: snake_speed = 19
+elif score == 100: snake_speed = 21
+elif score == 140: snake_speed = 23
+elif score == 180: snake_speed = 25
+elif score == 200: snake_speed = 27
+elif score == 240: snake_speed = 29
+elif score >= 300: snake_speed = 31
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_z: pyautogui.alert("Welcome to Snake In A Void guide!\n\n- CONTROLS -\n\nTo change directions of the snake, use your arrow keys.\nTo sprint, press and hold shift.\nTo unsprint, release shift key.\nTo quit game, press escape.\nTo retry or restart game, press r key.\nTo show this guide, press z key.\n\n- OBJECTS & OBJECTIVES -\n\nYour're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nCyan (ultimate fruit): +10 points\nWhite (fruit): +5 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nNow enjoy the game!")
             if event.key == pygame.K_UP: change_to = 'UP'
             if event.key == pygame.K_DOWN: change_to = 'DOWN'
             if event.key == pygame.K_LEFT: change_to = 'LEFT'
             if event.key == pygame.K_RIGHT: change_to = 'RIGHT'
+            if event.key == pygame.K_LSHIFT or event.key == pygame.K_RSHIFT: snake_speed += 10
             if event.key == pygame.K_ESCAPE: raise KeyboardInterrupt
             if event.key == pygame.K_r:
                 pygame.quit()
                 os.system(f"python {os.path.basename(__file__)}")
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LSHIFT or event.key == pygame.K_RSHIFT: snake_speed -= 10
 
     if change_to == 'UP' and direction != 'DOWN': direction = 'UP'
     if change_to == 'DOWN' and direction != 'UP': direction = 'DOWN'
@@ -116,7 +132,9 @@ while True:
     elif snake_position[0] == bomb_pos[0] and snake_position[1] == bomb_pos[1]:
         score -= 20
         bomb_spawn = False
-    elif snake_position[0] == wall_pos0[0] and snake_position[1] == wall_pos0[1] or snake_position[0] == wall_pos1[0] and snake_position[1] == wall_pos1[1] or snake_position[0] == wall_pos2[0] and snake_position[1] == wall_pos2[1] or snake_position[0] == wall_pos3[0] and snake_position[1] == wall_pos3[1]: game_over()
+    elif snake_position[0] == wall_pos0[0] and snake_position[1] == wall_pos0[1] or snake_position[0] == wall_pos1[0] and snake_position[1] == wall_pos1[1] or snake_position[0] == wall_pos2[0] and snake_position[1] == wall_pos2[1] or snake_position[0] == wall_pos3[0] and snake_position[1] == wall_pos3[1]:
+        game_over()
+        break
     else: snake_body.pop()
 
     if not fruit_spawn:
@@ -152,7 +170,9 @@ while True:
     if snake_position[1] < 0 or snake_position[1] > window_y-10: game_over()
 
     for block in snake_body[1:]:
-        if snake_position[0] == block[0] and snake_position[1] == block[1]: game_over()
+        if snake_position[0] == block[0] and snake_position[1] == block[1]:
+            game_over()
+            break
 
     show_score(white, 'segoe ui', 20)
     pygame.display.update()
