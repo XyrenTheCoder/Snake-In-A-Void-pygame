@@ -1,6 +1,9 @@
 import pygame, time, random, os
 
-snake_speed = 15
+with open(".highscore.txt", "+r") as file:
+    if os.name == 'nt': os.system("attrib +h .highscore.txt")
+    else: pass
+    file.close()
 
 window_x = 720
 window_y = 480
@@ -36,6 +39,7 @@ ult_spawn = True
 bomb_spawn = True
 wall_spawn = True
 
+snake_speed = 15
 direction = 'RIGHT'
 change_to = direction
 score = 0
@@ -50,15 +54,12 @@ def game_over():
     f = open(".highscore.txt", 'a')
     f.write(f"{score}\n")
     f.close()
-    if os.name == 'nt': os.system("attrib +h .highscore.txt")
-    else: pass
     font = pygame.font.SysFont('courier', 50)
     game_over_surface = font.render(f'Your score is : {str(score)}', True, white)
-    with open('.highscore.txt') as file:
-        lines = file.readlines()
-        scores = [line.rstrip() for line in lines]
-    scores.sort()
-    highscore = scores.pop()
+    f = open('.highscore.txt')
+    lines = f.readlines()
+    scores = [line.strip() for line in lines]
+    highscore = max(scores)
     font2 = pygame.font.SysFont('courier', 30)
     game_over_sub = font2.render(f'Highest score record: {str(highscore)}', True, green)
     game_over_rect = game_over_surface.get_rect()
@@ -73,24 +74,20 @@ def game_over():
     quit()
 
 while True:
-    #controls
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP: change_to = 'UP'
             if event.key == pygame.K_DOWN: change_to = 'DOWN'
             if event.key == pygame.K_LEFT: change_to = 'LEFT'
             if event.key == pygame.K_RIGHT: change_to = 'RIGHT'
-
     if change_to == 'UP' and direction != 'DOWN': direction = 'UP'
     if change_to == 'DOWN' and direction != 'UP': direction = 'DOWN'
     if change_to == 'LEFT' and direction != 'RIGHT': direction = 'LEFT'
     if change_to == 'RIGHT' and direction != 'LEFT': direction = 'RIGHT'
-
     if direction == 'UP': snake_position[1] -= 10
     if direction == 'DOWN': snake_position[1] += 10
     if direction == 'LEFT': snake_position[0] -= 10
     if direction == 'RIGHT': snake_position[0] += 10
-    #end of controls
 
     snake_body.insert(0, list(snake_position))
     if snake_position[0] == fruit_pos0[0] and snake_position[1] == fruit_pos0[1] or snake_position[0] == fruit_pos1[0] and snake_position[1] == fruit_pos1[1] or snake_position[0] == fruit_pos2[0] and snake_position[1] == fruit_pos2[1]:
