@@ -1,4 +1,4 @@
-# Snakes-pygame
+# Snake In A Void - pygame
 Snake game made with Pygame
 
 # instructions
