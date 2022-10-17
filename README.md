@@ -16,10 +16,6 @@ Use your `arrow keys` to change directions.
 
 `ESCAPE` key: Quit game (can be used mid-game and on death screen)
 
-### WARNING
-
-***Do not delete the hidden file `.highscore.txt` or you will lose your score records.***
-
 # Objects
 
 - blue - snake: the player
