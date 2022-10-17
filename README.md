@@ -10,6 +10,8 @@ Use your `arrow keys` to change directions.
 
 `SHIFT` keys: Sprint (only can be used in-game, of course)
 
+`X` key: Pause game (only can be used in-game)
+
 `R` key: Restart (can be used mid-game and on death screen)
 
 `ESCAPE` key: Quit game (can be used mid-game and on death screen)
