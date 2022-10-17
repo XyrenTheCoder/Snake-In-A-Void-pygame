@@ -184,8 +184,6 @@ while True:
     if direction == 'LEFT': snake_position[0] -= 10
     if direction == 'RIGHT': snake_position[0] += 10
 
-
-
     snake_body.insert(0, list(snake_position))
     if snake_position[0] == fruit_pos0[0] and snake_position[1] == fruit_pos0[1] or snake_position[0] == fruit_pos1[0] and snake_position[1] == fruit_pos1[1] or snake_position[0] == fruit_pos2[0] and snake_position[1] == fruit_pos2[1]:
         score += 5
