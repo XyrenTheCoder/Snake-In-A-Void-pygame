@@ -1,6 +1,7 @@
 import pygame, random, os.path, pyautogui, time
+from datetime import datetime
 
-pyautogui.alert("Welcome to Snake In A Void guide!\n\n- CONTROLS -\n\nTo change directions of the snake, use your arrow keys.\nTo sprint, press and hold shift.\nTo unsprint, release shift key.\nTo quit game, press escape.\nTo retry or restart game, press r key.\nTo show this guide, press z key.\n\n- OBJECTS & OBJECTIVES -\n\nYour're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nCyan (ultimate fruit): +10 points\nWhite (fruit): +5 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nNow enjoy the game!")
+pyautogui.alert("Welcome to Snake In A Void!\n\n- CONTROLS -\n\nArrow keys: change directions of the snake.\nHold lshift or rshift: sprint\nRelease lshift or rshift: stop sprinting.\nEscape: quit game.\nR key: restart game.\nX key: pause game.\nZ key: show this guide.\n\n- OBJECTS & OBJECTIVES -\n\nYou're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nCyan (ultimate fruit): +10 points\nWhite (fruit): +5 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nThanks for playing the game!")
 with open(".highscore.txt", "r") as file:
     if os.name == 'nt': os.system("attrib +h .highscore.txt")
     else: pass
@@ -21,6 +22,7 @@ pygame.init()
 pygame.display.set_caption('Now playing: Snake In A Void')
 game_window = pygame.display.set_mode((window_x, window_y))
 fps = pygame.time.Clock()
+init = datetime.now()
 
 bgm = pygame.mixer.Sound("bgm.ogg")
 ult_sound = pygame.mixer.Sound("bonus.ogg")
@@ -40,6 +42,8 @@ pygame.mixer.music.load('click.ogg')
 pygame.mixer.music.load('restart.ogg')
 pygame.mixer.music.load('exit.ogg')
 
+pygame.mixer.Sound.play(bgm, -1)
+
 snake_position = [100, 50]
 snake_body = [[100, 50], [90, 50], [80, 50], [70, 50]]
 
@@ -57,10 +61,6 @@ fruit_spawn = True
 ult_spawn = True
 bomb_spawn = True
 wall_spawn = True
-#death = False
-
-#if not death: pygame.mixer.Sound.play(bgm)
-#elif death: pygame.mixer.Sound.set_volume(0)
 
 direction = 'RIGHT'
 change_to = direction
@@ -75,13 +75,14 @@ def show_score(color, font, size):
 def game_over():
     pygame.mixer.Sound.play(death_sound)
     pygame.mixer.music.stop()
-    #global death
-    #death = True
+    bgm.stop()
+    end = datetime.now()
+    elapsed = end - init
     f = open(".highscore.txt", 'a')
     f.write(f"{score}\n")
     f.close()
-    font = pygame.font.SysFont('segoe ui', 50)
-    game_over_surface = font.render(f'Your score is : {str(score)}', True, white)
+    font = pygame.font.SysFont('segoe ui', 35)
+    game_over_surface = font.render(f'Final score: {str(score)} | Elapsed time: {str(elapsed)}', True, white)
     f = open(".highscore.txt").read().splitlines()
     q = list()
     for i in f: q.append(int(i))
@@ -94,7 +95,7 @@ def game_over():
     game_over_rect2 = game_over_surface.get_rect()
     game_over_rect3 = game_over_surface.get_rect()
     game_over_rect.midtop = (window_x/2, window_y/4)
-    game_over_rect2.midbottom = (window_x/2-58, window_y/2+100)
+    game_over_rect2.midbottom = (window_x/2, window_y/2+100)
     game_over_rect3.bottomleft = (window_x/2-350, window_y/2+250)
 
     game_window.blit(game_over_surface, game_over_rect)
@@ -114,7 +115,7 @@ def game_over():
                 elif restart.key == pygame.K_z:
                     pygame.mixer.Sound.play(click_sound)
                     pygame.mixer.music.stop()
-                    pyautogui.alert("Welcome to Snake In A Void guide!\n\n- CONTROLS -\n\nTo change directions of the snake, use your arrow keys.\nTo sprint, press and hold shift.\nTo unsprint, release shift key.\nTo quit game, press escape.\nTo retry or restart game, press r key.\nTo show this guide, press z key.\n\n- OBJECTS & OBJECTIVES -\n\nYour're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nCyan (ultimate fruit): +10 points\nWhite (fruit): +5 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nNow enjoy the game!")
+                    pyautogui.alert("Welcome to Snake In A Void!\n\n- CONTROLS -\n\nArrow keys: change directions of the snake.\nHold lshift or rshift: sprint\nRelease lshift or rshift: stop sprinting.\nEscape: quit game.\nR key: restart game.\nX key: pause game.\nZ key: show this guide.\n\n- OBJECTS & OBJECTIVES -\n\nYou're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nCyan (ultimate fruit): +10 points\nWhite (fruit): +5 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nThanks for playing the game!")
                 elif restart.key == pygame.K_ESCAPE:
                     pygame.mixer.Sound.play(quit_sound)
                     pygame.mixer.music.stop()
@@ -123,23 +124,23 @@ def game_over():
                 else: pass
             else: pass
 
-snake_speed = 15
-if score == 40: snake_speed = 17
-elif score == 80: snake_speed = 19
-elif score == 100: snake_speed = 21
-elif score == 140: snake_speed = 23
-elif score == 180: snake_speed = 25
-elif score == 200: snake_speed = 27
-elif score == 240: snake_speed = 29
-elif score >= 300: snake_speed = 31
-
 while True:
+    snake_speed = 10
+    if score >= 40: snake_speed = 15
+    elif score >= 80: snake_speed = 20
+    elif score >= 100: snake_speed = 25
+    elif score >= 140: snake_speed = 30
+    elif score >= 180: snake_speed = 35
+    elif score >= 200: snake_speed = 40
+
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_x:
+                pyautogui.alert("Game paused.\nClose this textbox to unpause.")
             if event.key == pygame.K_z:
                 pygame.mixer.Sound.play(click_sound)
                 pygame.mixer.music.stop()
-                pyautogui.alert("Welcome to Snake In A Void guide!\n\n- CONTROLS -\n\nTo change directions of the snake, use your arrow keys.\nTo sprint, press and hold shift.\nTo unsprint, release shift key.\nTo quit game, press escape.\nTo retry or restart game, press r key.\nTo show this guide, press z key.\n\n- OBJECTS & OBJECTIVES -\n\nYour're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nCyan (ultimate fruit): +10 points\nWhite (fruit): +5 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nNow enjoy the game!")
+                pyautogui.alert("Welcome to Snake In A Void!\n\n- CONTROLS -\n\nArrow keys: change directions of the snake.\nHold lshift or rshift: sprint\nRelease lshift or rshift: stop sprinting.\nEscape: quit game.\nR key: restart game.\nX key: pause game.\nZ key: show this guide.\n\n- OBJECTS & OBJECTIVES -\n\nYou're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nCyan (ultimate fruit): +10 points\nWhite (fruit): +5 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nThanks for playing the game!")
             if event.key == pygame.K_UP:
                 change_to = 'UP'
                 pygame.mixer.Sound.play(click_sound)
@@ -182,6 +183,8 @@ while True:
     if direction == 'DOWN': snake_position[1] += 10
     if direction == 'LEFT': snake_position[0] -= 10
     if direction == 'RIGHT': snake_position[0] += 10
+
+
 
     snake_body.insert(0, list(snake_position))
     if snake_position[0] == fruit_pos0[0] and snake_position[1] == fruit_pos0[1] or snake_position[0] == fruit_pos1[0] and snake_position[1] == fruit_pos1[1] or snake_position[0] == fruit_pos2[0] and snake_position[1] == fruit_pos2[1]:
