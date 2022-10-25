@@ -2,7 +2,7 @@ import pygame, random, os.path, pyautogui, time
 from datetime import datetime
 
 pyautogui.alert("Welcome to Snake In A Void!\n\n- CONTROLS -\n\nArrow keys: change directions of the snake.\nHold lshift or rshift: sprint\nRelease lshift or rshift: stop sprinting.\nEscape: quit game.\nR key: restart game.\nX key: pause game.\nZ key: show this guide.\n\n- OBJECTS & OBJECTIVES -\n\nYou're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nCyan (ultimate fruit): +10 points\nWhite (fruit): +5 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nThanks for playing the game!")
-open(".highscore.txt", "x")
+#open(".highscore.txt", "x")
 with open(".highscore.txt", "r") as file:
     if os.name == 'nt': os.system("attrib +h .highscore.txt")
     else: pass
