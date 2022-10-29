@@ -2,10 +2,9 @@ import pygame, random, os.path, pyautogui, time
 from datetime import datetime
 
 pyautogui.alert("Welcome to Snake In A Void!\n\n- CONTROLS -\n\nArrow keys: change directions of the snake.\nHold lshift or rshift: sprint\nRelease lshift or rshift: stop sprinting.\nEscape: quit game.\nR key: restart game.\nX key: pause game.\nZ key: show this guide.\n\n- OBJECTS & OBJECTIVES -\n\nYou're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nCyan (ultimate fruit): +10 points\nWhite (fruit): +5 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nThanks for playing the game!")
-with open(".highscore.txt", "w+") as file:
-    if os.name == 'nt': os.system("attrib +h .highscore.txt")
-    else: pass
-    file.close()
+open(".highscore.txt", "a")
+if os.name == 'nt': os.system("attrib +h .highscore.txt")
+else: pass
 
 window_x = 720
 window_y = 540
@@ -65,12 +64,20 @@ wall_spawn = True
 direction = 'RIGHT'
 change_to = direction
 score = 0
+snake_speed = 10
 
 def show_score(color, font, size):
     iscore = pygame.font.SysFont(font, size)
     score_surface = iscore.render(f'Score : {str(score)}', True, color)
     score_rect = score_surface.get_rect()
     game_window.blit(score_surface, score_rect)
+    global snake_speed
+    if score >= 40: snake_speed = 15
+    elif score >= 80: snake_speed = 20
+    elif score >= 100: snake_speed = 25
+    elif score >= 140: snake_speed = 30
+    elif score >= 180: snake_speed = 35
+    elif score >= 200: snake_speed = 40
 
 def game_over():
     pygame.mixer.Sound.play(death_sound)
@@ -125,14 +132,6 @@ def game_over():
             else: pass
 
 while True:
-    snake_speed = 10
-    if score >= 40: snake_speed = 15
-    elif score >= 80: snake_speed = 20
-    elif score >= 100: snake_speed = 25
-    elif score >= 140: snake_speed = 30
-    elif score >= 180: snake_speed = 35
-    elif score >= 200: snake_speed = 40
-
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_x:
