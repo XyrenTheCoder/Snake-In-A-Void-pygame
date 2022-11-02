@@ -80,6 +80,15 @@ def show_score(color, font, size):
     elif score >= 280: snake_speed = 21
     elif score >= 300: snake_speed = 23
 
+def show_timer(color, font, size):
+    now = datetime.now()
+    ctime = now - init
+    itime = pygame.font.SysFont(font, size)
+    time_surface = itime.render(f'Time : {str(ctime)}', True, color)
+    time_rect = time_surface.get_rect()
+    time_rect.topright = (window_x-5, window_y/70-6)
+    game_window.blit(time_surface, time_rect)
+
 def game_over():
     pygame.mixer.Sound.play(death_sound)
     pygame.mixer.music.stop()
@@ -243,5 +252,6 @@ while True:
             break
 
     show_score(white, 'segoe ui', 20)
+    show_timer(white, 'segoe ui', 20)
     pygame.display.update()
     fps.tick(snake_speed)
