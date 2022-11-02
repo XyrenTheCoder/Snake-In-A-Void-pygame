@@ -64,20 +64,21 @@ wall_spawn = True
 direction = 'RIGHT'
 change_to = direction
 score = 0
-snake_speed = 10
+snake_speed = 13
 
 def show_score(color, font, size):
     iscore = pygame.font.SysFont(font, size)
     score_surface = iscore.render(f'Score : {str(score)}', True, color)
     score_rect = score_surface.get_rect()
     game_window.blit(score_surface, score_rect)
+
     global snake_speed
-    if score >= 40: snake_speed = 15
-    elif score >= 80: snake_speed = 20
-    elif score >= 100: snake_speed = 25
-    elif score >= 140: snake_speed = 30
-    elif score >= 180: snake_speed = 35
-    elif score >= 200: snake_speed = 40
+    if score >= 80: snake_speed = 15
+    elif score >= 100: snake_speed = 17
+    elif score >= 180: snake_speed = 19
+    elif score >= 200: snake_speed = 20
+    elif score >= 280: snake_speed = 21
+    elif score >= 300: snake_speed = 23
 
 def game_over():
     pygame.mixer.Sound.play(death_sound)
