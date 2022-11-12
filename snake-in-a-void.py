@@ -1,7 +1,7 @@
 import pygame, random, os.path, pyautogui, time
 from datetime import datetime
 
-pyautogui.alert("Welcome to Snake In A Void!\n\n- CONTROLS -\n\nArrow keys: change directions of the snake.\nHold lshift or rshift: sprint\nRelease lshift or rshift: stop sprinting.\nEscape: quit game.\nR key: restart game.\nX key: pause game.\nZ key: show this guide.\n\n- OBJECTS & OBJECTIVES -\n\nYou're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nCyan (ultimate fruit): +10 points\nWhite (fruit): +5 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nThanks for playing the game!")
+pyautogui.alert("Welcome to Snake In A Void!\n\n- CONTROLS -\n\nArrow keys: change directions of the snake.\nHold lshift or rshift: sprint\nRelease lshift or rshift: stop sprinting.\nEscape: quit game.\nR key: restart game.\nX key: pause game.\nZ key: show this guide.\n\n- OBJECTS & OBJECTIVES -\n\nYou're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nWhite (fruit): +1 points\nYellow (banana): +2 points\nCyan (ultimate fruit): +10 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nThanks for playing the game!")
 open(".highscore.txt", "a")
 if os.name == 'nt': os.system("attrib +h .highscore.txt")
 else: pass
@@ -11,11 +11,13 @@ window_y = 540
 
 black = pygame.Color(0,0,0)
 white = pygame.Color(255,255,255)
-grey = pygame.Color(50,50,50)
+grey = pygame.Color(60,60,60)
 red = pygame.Color(255,0,0)
 green = pygame.Color(0,255,0)
 blue = pygame.Color(0,0,255)
 cyan = pygame.Color(0,255,255)
+yellow = pygame.Color(255, 255, 0)
+#magenta = pygame.Color(255, 0, 255)
 
 pygame.init()
 pygame.display.set_caption('Now playing: Snake In A Void')
@@ -49,6 +51,9 @@ snake_body = [[100, 50], [90, 50], [80, 50], [70, 50]]
 fruit_pos0 = [random.randrange(1, (window_x//10)) * 10, random.randrange(1, (window_y//10)) * 10]
 fruit_pos1 = [random.randrange(1, (window_x//10)) * 10, random.randrange(1, (window_y//10)) * 10]
 fruit_pos2 = [random.randrange(1, (window_x//10)) * 10, random.randrange(1, (window_y//10)) * 10]
+banana_pos0 = [random.randrange(1, (window_x//10)) * 10, random.randrange(1, (window_y//10)) * 10]
+banana_pos1 = [random.randrange(1, (window_x//10)) * 10, random.randrange(1, (window_y//10)) * 10]
+banana_pos2 = [random.randrange(1, (window_x//10)) * 10, random.randrange(1, (window_y//10)) * 10]
 ult_pos = [random.randrange(1, (window_x//10)) * 10, random.randrange(1, (window_y//10)) * 10]
 bomb_pos = [random.randrange(1, (window_x//10)) * 10, random.randrange(1, (window_y//10)) * 10]
 wall_pos0 = [random.randrange(1, (window_x//10)) * 10, random.randrange(1, (window_y//10)) * 10]
@@ -57,6 +62,8 @@ wall_pos2 = [random.randrange(1, (window_x//10)) * 10, random.randrange(1, (wind
 wall_pos3 = [random.randrange(1, (window_x//10)) * 10, random.randrange(1, (window_y//10)) * 10]
 
 fruit_spawn = True
+banana_spawn = True
+grape_spawn = True
 ult_spawn = True
 bomb_spawn = True
 wall_spawn = True
@@ -132,7 +139,7 @@ def game_over():
                 elif restart.key == pygame.K_z:
                     pygame.mixer.Sound.play(click_sound)
                     pygame.mixer.music.stop()
-                    pyautogui.alert("Welcome to Snake In A Void!\n\n- CONTROLS -\n\nArrow keys: change directions of the snake.\nHold lshift or rshift: sprint\nRelease lshift or rshift: stop sprinting.\nEscape: quit game.\nR key: restart game.\nX key: pause game.\nZ key: show this guide.\n\n- OBJECTS & OBJECTIVES -\n\nYou're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nCyan (ultimate fruit): +10 points\nWhite (fruit): +5 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nThanks for playing the game!")
+                    pyautogui.alert("Welcome to Snake In A Void!\n\n- CONTROLS -\n\nArrow keys: change directions of the snake.\nHold lshift or rshift: sprint\nRelease lshift or rshift: stop sprinting.\nEscape: quit game.\nR key: restart game.\nX key: pause game.\nZ key: show this guide.\n\n- OBJECTS & OBJECTIVES -\n\nYou're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nWhite (fruit): +1 points\nYellow (banana): +2 points\nCyan (ultimate fruit): +10 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nThanks for playing the game!")
                 elif restart.key == pygame.K_ESCAPE:
                     pygame.mixer.Sound.play(quit_sound)
                     pygame.mixer.music.stop()
@@ -146,10 +153,6 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_x:
                 pyautogui.alert("Game paused.\nClose this textbox to unpause.")
-            if event.key == pygame.K_z:
-                pygame.mixer.Sound.play(click_sound)
-                pygame.mixer.music.stop()
-                pyautogui.alert("Welcome to Snake In A Void!\n\n- CONTROLS -\n\nArrow keys: change directions of the snake.\nHold lshift or rshift: sprint\nRelease lshift or rshift: stop sprinting.\nEscape: quit game.\nR key: restart game.\nX key: pause game.\nZ key: show this guide.\n\n- OBJECTS & OBJECTIVES -\n\nYou're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nCyan (ultimate fruit): +10 points\nWhite (fruit): +5 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nThanks for playing the game!")
             if event.key == pygame.K_UP:
                 change_to = 'UP'
                 pygame.mixer.Sound.play(click_sound)
@@ -195,10 +198,15 @@ while True:
 
     snake_body.insert(0, list(snake_position))
     if snake_position[0] == fruit_pos0[0] and snake_position[1] == fruit_pos0[1] or snake_position[0] == fruit_pos1[0] and snake_position[1] == fruit_pos1[1] or snake_position[0] == fruit_pos2[0] and snake_position[1] == fruit_pos2[1]:
-        score += 5
+        score += 1
         pygame.mixer.Sound.play(fruit_sound)
         pygame.mixer.music.stop()
         fruit_spawn = False
+    elif snake_position[0] == banana_pos0[0] and snake_position[1] == banana_pos0[1] or snake_position[0] == banana_pos1[0] and snake_position[1] == banana_pos1[1] or snake_position[0] == banana_pos2[0] and snake_position[1] == banana_pos2[1]:
+        score += 2
+        pygame.mixer.Sound.play(fruit_sound)
+        pygame.mixer.music.stop()
+        banana_spawn = False
     elif snake_position[0] == ult_pos[0] and snake_position[1] == ult_pos[1]:
         score += 10
         pygame.mixer.Sound.play(ult_sound)
@@ -218,15 +226,20 @@ while True:
         fruit_pos0 = [random.randrange(1, (window_x // 10)) * 10, random.randrange(1, (window_y // 10)) * 10]
         fruit_pos1 = [random.randrange(1, (window_x // 10)) * 10, random.randrange(1, (window_y // 10)) * 10]
         fruit_pos2 = [random.randrange(1, (window_x // 10)) * 10, random.randrange(1, (window_y // 10)) * 10]
+    if not banana_spawn:
+        banana_pos0 = [random.randrange(1, (window_x // 10)) * 10, random.randrange(1, (window_y // 10)) * 10]
+        banana_pos1 = [random.randrange(1, (window_x // 10)) * 10, random.randrange(1, (window_y // 10)) * 10]
+        banana_pos2 = [random.randrange(1, (window_x // 10)) * 10, random.randrange(1, (window_y // 10)) * 10]
     if not ult_spawn: ult_pos = [random.randrange(1, (window_x//10)) * 10, random.randrange(1, (window_y//10)) * 10]
     if not bomb_spawn: bomb_pos = [random.randrange(1, (window_x//10)) * 10, random.randrange(1, (window_y//10)) * 10]
     if not wall_spawn:
-            wall_pos0 = [random.randrange(1, (window_x // 10)) * 10, random.randrange(1, (window_y // 10)) * 10]
-            wall_pos1 = [random.randrange(1, (window_x // 10)) * 10, random.randrange(1, (window_y // 10)) * 10]
-            wall_pos2 = [random.randrange(1, (window_x // 10)) * 10, random.randrange(1, (window_y // 10)) * 10]
-            wall_pos3 = [random.randrange(1, (window_x // 10)) * 10, random.randrange(1, (window_y // 10)) * 10]
+        wall_pos0 = [random.randrange(1, (window_x // 10)) * 10, random.randrange(1, (window_y // 10)) * 10]
+        wall_pos1 = [random.randrange(1, (window_x // 10)) * 10, random.randrange(1, (window_y // 10)) * 10]
+        wall_pos2 = [random.randrange(1, (window_x // 10)) * 10, random.randrange(1, (window_y // 10)) * 10]
+        wall_pos3 = [random.randrange(1, (window_x // 10)) * 10, random.randrange(1, (window_y // 10)) * 10]
 
     fruit_spawn = True
+    banana_spawn = True
     ult_spawn = True
     bomb_spawn = True
     game_window.fill(black)
@@ -236,6 +249,9 @@ while True:
         pygame.draw.rect(game_window, white, pygame.Rect(fruit_pos0[0], fruit_pos0[1], 10, 10))
         pygame.draw.rect(game_window, white, pygame.Rect(fruit_pos1[0], fruit_pos1[1], 10, 10))
         pygame.draw.rect(game_window, white, pygame.Rect(fruit_pos2[0], fruit_pos2[1], 10, 10))
+        pygame.draw.rect(game_window, yellow, pygame.Rect(banana_pos0[0], banana_pos0[1], 10, 10))
+        pygame.draw.rect(game_window, yellow, pygame.Rect(banana_pos1[0], banana_pos1[1], 10, 10))
+        pygame.draw.rect(game_window, yellow, pygame.Rect(banana_pos2[0], banana_pos2[1], 10, 10))
         pygame.draw.rect(game_window, cyan, pygame.Rect(ult_pos[0], ult_pos[1], 10, 10))
         pygame.draw.rect(game_window, red, pygame.Rect(bomb_pos[0], bomb_pos[1], 10, 10))
         pygame.draw.rect(game_window, grey, pygame.Rect(wall_pos0[0], wall_pos0[1], 10, 10))
