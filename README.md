@@ -20,9 +20,11 @@ Use your `arrow keys` to change directions.
 
 - blue - snake: the player
 
-- cyan - ultimate fruit: +10 points
+- white - fruit: +1 points
 
-- white - fruit: +5 points
+- yellow - banana: +2 points
+
+- cyan - ultimate fruit: +10 points
 
 - red - bomb: -20 points
 
