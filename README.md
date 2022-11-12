@@ -20,7 +20,7 @@ Use your `arrow keys` to change directions.
 
 - blue - snake: the player
 
-- white - fruit: +1 points
+- white - fruit: +1 point
 
 - yellow - banana: +2 points
 
