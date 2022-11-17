@@ -102,15 +102,19 @@ def game_over():
     bgm.stop()
     end = datetime.now()
     elapsed = end - init
+
     f = open(".highscore.txt", 'a')
     f.write(f"{score}\n")
     f.close()
+
     font = pygame.font.SysFont('segoe ui', 35)
     game_over_surface = font.render(f'Final score: {str(score)} | Elapsed time: {str(elapsed)}', True, white)
+
     f = open(".highscore.txt").read().splitlines()
     q = list()
     for i in f: q.append(int(i))
     highscore = max(q)
+
     font2 = pygame.font.SysFont('courier', 30)
     game_over_sub = font2.render(f'Highest score record: {str(highscore)}', True, green)
     font3 = pygame.font.SysFont('segoe ui', 20)
