@@ -4,7 +4,6 @@ from datetime import datetime
 pyautogui.alert("Welcome to Snake In A Void!\n\n- CONTROLS -\n\nArrow keys: change directions of the snake.\nHold lshift or rshift: sprint\nRelease lshift or rshift: stop sprinting.\nEscape: quit game.\nR key: restart game.\nX key: pause game.\nZ key: show this guide.\n\n- OBJECTS & OBJECTIVES -\n\nYou're a snake who has been trapped inside a void. Your goal is to survive and get as much score as you can.\n\nWhite (fruit): +1 points\nYellow (banana): +2 points\nCyan (ultimate fruit): +10 points\nRed (bomb): -20 points\nGrey & window borders (wall): kills you when touched\n\nThanks for playing the game!")
 open(".highscore.txt", "a")
 if os.name == 'nt': os.system("attrib +h .highscore.txt")
-else: pass
 
 window_x = 720
 window_y = 540
@@ -63,7 +62,7 @@ wall_pos3 = [random.randrange(1, (window_x//10)) * 10, random.randrange(1, (wind
 
 fruit_spawn = True
 banana_spawn = True
-grape_spawn = True
+#grape_spawn = True
 ult_spawn = True
 bomb_spawn = True
 wall_spawn = True
@@ -173,6 +172,7 @@ while True:
                 change_to = 'RIGHT'
                 pygame.mixer.Sound.play(click_sound)
                 pygame.mixer.music.stop()
+
             if event.key == pygame.K_LSHIFT or event.key == pygame.K_RSHIFT:
                 snake_speed += 10
                 pygame.mixer.Sound.play(click_sound)
